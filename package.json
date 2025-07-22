@@ -1,5 +1,40 @@
 {
-  "dependencies": {
-    "loopback-connector-postgresql": "^5.5.2"
+  "name": "lb4-product-app",
+  "version": "1.0.0",
+  "description": "Monorepo for LoopBack 4 Product Application",
+  "private": true,
+  "author": "Sumeet Gupta <sumeet.gupta@sourcefuse.com>",
+  "workspaces": [
+    "product-service",
+    "user-service",
+    "store-facade",
+    "order-service"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "start:all": "concurrently \"npm:start --workspace product-service\" \"npm:start --workspace user-service\" \"npm:start --workspace store-facade\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sumeetguptasf/lb4-product-app.git"
+  },
+  "keywords": [
+    "product",
+    "application",
+    "loopback",
+    "monorepo",
+    "microservices",
+    "nodejs",
+    "typescript"
+  ],
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/sumeetguptasf/lb4-product-app/issues"
+  },
+  "homepage": "https://github.com/sumeetguptasf/lb4-product-app#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.0"
   }
 }

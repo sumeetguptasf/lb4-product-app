@@ -18,7 +18,7 @@ export class Product extends Entity {
 
   @property({
     type: 'string',
-    default: "NO DESC",
+    default: 'NO DESC',
   })
   description?: string;
 

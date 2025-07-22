@@ -1,10 +1,9 @@
-import {ApplicationConfig, OrderServiceApplication} from './application';
-import * as dotenv from 'dotenv';
-dotenv.config(); // Load .env before anything else
+import {ApplicationConfig, StoreFacadeApplication} from './application';
+
 export * from './application';
 
 export async function main(options: ApplicationConfig = {}) {
-  const app = new OrderServiceApplication(options);
+  const app = new StoreFacadeApplication(options);
   await app.boot();
   await app.start();
 

@@ -45,6 +45,20 @@ export class User extends Entity {
   address: string;
 
   @property({
+    type: 'string',
+    required: true,
+    jsonSchema: {
+      enum: ['SuperAdmin', 'Admin', 'Subscriber'],
+    },
+    postgresql: {
+      columnName: 'role',
+      dataType: 'user_role',
+    },
+    default: 'Subscriber',
+  })
+  role: 'SuperAdmin' | 'Admin' | 'Subscriber';
+
+  @property({
     type: 'date',
   })
   createdAt?: string;

@@ -8,9 +8,7 @@ export class ProductRepository extends DefaultCrudRepository<
   typeof Product.prototype.productId,
   ProductRelations
 > {
-  constructor(
-    @inject('datasources.db') dataSource: DbDataSource,
-  ) {
+  constructor(@inject('datasources.db') dataSource: DbDataSource) {
     super(Product, dataSource);
   }
 }

@@ -1,5 +1,12 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'user_role') THEN
+    CREATE TYPE user_role AS ENUM ('SuperAdmin', 'Admin', 'Subscriber');
+  END IF;
+END$$;
+
 CREATE TABLE "user" (
     userId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     firstname VARCHAR(255) NOT NULL,
@@ -8,6 +15,7 @@ CREATE TABLE "user" (
     email VARCHAR(255) UNIQUE NOT NULL,
     phone VARCHAR(20),
     address TEXT,
+    role user_role NOT NULL DEFAULT 'Subscriber',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

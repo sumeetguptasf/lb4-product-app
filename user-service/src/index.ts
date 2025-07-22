@@ -1,5 +1,6 @@
 import {ApplicationConfig, UserServiceApplication} from './application';
-
+import * as dotenv from 'dotenv';
+dotenv.config(); // Load .env before anything else
 export * from './application';
 
 export async function main(options: ApplicationConfig = {}) {
