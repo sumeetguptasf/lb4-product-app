@@ -1,0 +1,81 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres-container
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: productdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+  
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    container_name: user-service-container
+    environment:
+      - USER_SERVICE_NAME=User Service
+      - PORT=3002
+      - HOST=localhost
+      - DB_URL=postgres://postgres:postgres@postgres:5432/userdb
+      - DB_SSL=false
+    ports:
+      - "3002:3002"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+  order-service:
+    build:
+      context: ./order-service
+      dockerfile: Dockerfile
+    container_name: order-service-container
+    environment:
+      - SERVICE_NAME=Order Service
+      - PORT=3003
+      - HOST=localhost
+      - DB_URL=postgres://postgres:postgres@postgres:5432/orderdb
+      - DB_SSL=false
+    ports:
+      - "3003:3003"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+  product-service:
+    build:
+      context: ./product-service
+      dockerfile: Dockerfile
+    container_name: product-service-container
+    environment:
+      - PRODUCT_SERVICE_NAME=Product Service
+      - PORT=3001
+      - HOST=localhost
+      - DB_URL=postgres://postgres:postgres@postgres:5432/productdb
+      - DB_SSL=false
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres
+    restart: unless-stopped 
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: api-gateway-container
+    environment:
+      - API_GATEWAY_NAME=API Gateway
+      - PORT=3000
+      - HOST=localhost
+    ports:
+      - "3000:3000"
+    depends_on:
+      - user-service
+      - order-service
+      - product-service
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
