@@ -1,6 +1,14 @@
-import {Entity, model, property} from '@loopback/repository';
+import { belongsTo, Entity, model, property } from '@loopback/repository';
+import { Order } from './order.model';
 
-@model({settings: {strict: false}})
+@model({
+  settings: {
+    strict: true,
+    postgresql: {
+      table: 'order_items',
+    },
+  },
+})
 export class OrderItem extends Entity {
   @property({
     type: 'string',
@@ -9,17 +17,33 @@ export class OrderItem extends Entity {
   })
   id?: string;
 
-  @property({
-    type: 'string',
-    required: true,
+  @belongsTo(() => Order, {
+    name: 'order',
+    keyFrom: 'orderId',
+    keyTo: 'id',
+  }, {
+    postgresql: {
+      columnName: 'order_id',
+    },
   })
   orderId: string;
 
   @property({
     type: 'string',
     required: true,
+    postgresql: {
+      columnName: 'product_id',
+    },
   })
   productId: string;
+
+  @property({ 
+    type: 'string',
+    postgresql: {
+      columnName: 'product_name',
+    },
+  })
+  productName?: string;
 
   @property({
     type: 'number',
@@ -30,8 +54,11 @@ export class OrderItem extends Entity {
   @property({
     type: 'number',
     required: true,
+    postgresql: {
+      columnName: 'unit_price',
+    },
   })
-  price: number;
+  unitPrice: number;
 
   // Define well-known properties here
 

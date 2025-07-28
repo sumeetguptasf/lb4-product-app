@@ -1,14 +1,20 @@
-import {Entity, model, property} from '@loopback/repository';
+import { Entity, model, property } from '@loopback/repository';
 
-@model({settings: {strict: false}})
+@model({
+  settings: {
+    strict: true,
+    postgresql: {
+      table: 'products',
+    },
+  },
+})
 export class Product extends Entity {
   @property({
     type: 'string',
     id: true,
-    generated: true,
-    defaultFn: 'uuidv4',
+    defaultFn: 'uuidv4', // dont use generated: true as it does not work with defaultFn
   })
-  productId?: string;
+  id?: string;
 
   @property({
     type: 'string',
@@ -36,6 +42,7 @@ export class Product extends Entity {
 
   @property({
     type: 'date',
+    defaultFn: 'now',
   })
   created_at?: string;
 

@@ -1,13 +1,20 @@
-import {Entity, model, property} from '@loopback/repository';
+import { Entity, model, property } from '@loopback/repository';
 
-@model({settings: {strict: false}})
+@model({
+  settings: {
+    strict: true,
+    postgresql: {
+      table: 'users',
+    },
+  },
+})
 export class User extends Entity {
   @property({
     type: 'string',
     id: true,
-    generated: true,
+    defaultFn: 'uuidv4', // dont use generated: true as it does not work with defaultFn
   })
-  userId?: string;
+  id?: string;
 
   @property({
     type: 'string',
@@ -60,13 +67,22 @@ export class User extends Entity {
 
   @property({
     type: 'date',
+    defaultFn: 'now',
+    postgresql: {
+      columnName: 'created_at',
+      dataType: 'timestamp with time zone',
+    },
   })
-  createdAt?: string;
+  created_at?: string;
 
   @property({
     type: 'date',
+    postgresql: {
+      columnName: 'updated_at',
+      dataType: 'timestamp with time zone',
+    },
   })
-  updatedAt?: string;
+  updated_at?: string;
 
   // Define well-known properties here
 

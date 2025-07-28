@@ -1,4 +1,4 @@
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- CREATE EXTENSION IF NOT EXISTS "uuid-ossp"; -- NOT Required with defaultFn: 'uuidv4'
 
 DO $$
 BEGIN
@@ -7,8 +7,8 @@ BEGIN
   END IF;
 END$$;
 
-CREATE TABLE "user" (
-    userId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+CREATE TABLE "users" (
+    id UUID PRIMARY KEY,
     firstname VARCHAR(255) NOT NULL,
     middlename VARCHAR(255),
     lastname VARCHAR(255) NOT NULL,
