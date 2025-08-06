@@ -15,6 +15,9 @@ export {ApplicationConfig};
 export class StoreFacadeApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
+  stop() {
+    throw new Error('Method not implemented.');
+  }
   constructor(options: ApplicationConfig = {}) {
     super(options);
 

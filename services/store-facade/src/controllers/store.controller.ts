@@ -49,4 +49,12 @@ export class StoreFacadeController implements LifeCycleObserver {
 
     return { product, orders };
   }
+
+  @get('/facade/users/{userId}/orders')
+  async getOrdersForUser(
+    @param.path.string('userId') userId: string,
+  ): Promise<Order[]> {
+    const orderService = await getService<OrderService>(this.orderDataSource);
+    return orderService.getOrdersByUserId(userId);
+  }
 }

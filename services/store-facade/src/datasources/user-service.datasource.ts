@@ -4,9 +4,35 @@ import {juggler} from '@loopback/repository';
 const config = {
   name: 'userService',
   connector: 'rest',
-  baseURL: 'http://localhost:3002',
-  crud: true
+  baseURL: process.env.USER_SERVICE_URL || 'http://localhost:3002',
+  ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
+  crud: true,
+  operations: [
+    {
+      template: {
+        method: 'GET',
+        url: '/users/{userId}',
+      },
+      functions: {
+        getUserById: ['userId'],
+      },
+    },
+    {
+      template: {
+        method: 'POST',
+        url: '/users',
+        body: '{body}',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+      functions: {
+        createUser: ['body'],
+      },
+    },
+  ],
 };
+
 
 // Observe application's life cycle to disconnect the datasource when
 // application is stopped. This allows the application to be shut down

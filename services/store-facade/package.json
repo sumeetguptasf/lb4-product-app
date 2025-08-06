@@ -36,6 +36,7 @@
     "start:local": "dotenv -e .env.local -- npm start",
     "start:dev": "npm run start:local",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
+    "clean:full": "rm -rf dist *.tsbuildinfo .eslintcache",
     "rebuild": "npm run clean && npm run build"
   },
   "repository": {
