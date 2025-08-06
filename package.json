@@ -36,6 +36,7 @@
     "concurrently": "^9.2.0"
   },
   "dependencies": {
+    "@sourceloop/user-tenant-service": "^5.0.0",
     "loopback-connector-rest": "^5.0.8"
   }
 }

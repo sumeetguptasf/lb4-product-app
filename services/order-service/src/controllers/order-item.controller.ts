@@ -19,92 +19,89 @@ import {
   Order,
   OrderItem,
 } from '../models';
-import {OrderRepository} from '../repositories';
+import { OrderRepository } from '../repositories';
 
 export class OrderItemController {
   constructor(
     @repository(OrderRepository) protected orderRepository: OrderRepository,
   ) { }
 
-  @get('/orders/{id}/order-items', {
+  
+  @get('/orders/{orderId}/order-items', {
     responses: {
       '200': {
         description: 'Array of Order has many OrderItem',
         content: {
           'application/json': {
-            schema: {type: 'array', items: getModelSchemaRef(OrderItem)},
+            schema: { type: 'array', items: getModelSchemaRef(OrderItem) },
           },
         },
       },
     },
   })
   async find(
-    @param.path.string('id') id: string,
+    @param.path.string('orderId') orderId: string,
     @param.query.object('filter') filter?: Filter<OrderItem>,
   ): Promise<OrderItem[]> {
-    return this.orderRepository.items(id).find(filter);
+    return this.orderRepository.items(orderId).find(filter);
   }
 
-  @post('/orders/{id}/order-items', {
+  @post('/orders/{orderId}/order-items', {
     responses: {
       '200': {
         description: 'Order model instance',
-        content: {'application/json': {schema: getModelSchemaRef(OrderItem)}},
+        content: { 'application/json': { schema: getModelSchemaRef(OrderItem) } },
       },
     },
   })
-  async create(
-    @param.path.string('id') id: typeof Order.prototype.id,
-    @requestBody({
+  async create(@param.path.string('orderId') orderId: typeof Order.prototype.id, @requestBody({
       content: {
         'application/json': {
           schema: getModelSchemaRef(OrderItem, {
             title: 'NewOrderItemInOrder',
-            exclude: ['id'],
+            exclude: ['id', 'orderId'],
             optional: ['orderId']
           }),
         },
       },
-    }) orderItem: Omit<OrderItem, 'id'>,
+    }) orderItem: Omit<OrderItem, 'orderId'>,
   ): Promise<OrderItem> {
-    return this.orderRepository.items(id).create(orderItem);
+    return this.orderRepository.items(orderId).create(orderItem);
   }
 
-  @patch('/orders/{id}/order-items', {
+  @patch('/orders/{orderId}/order-items', {
     responses: {
       '200': {
         description: 'Order.OrderItem PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: { 'application/json': { schema: CountSchema } },
       },
     },
   })
-  async patch(
-    @param.path.string('id') id: string,
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(OrderItem, {partial: true}),
-        },
+  async patch(@param.path.string('orderId') orderId: string, @requestBody({
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(OrderItem, { partial: true }),
       },
-    })
-    orderItem: Partial<OrderItem>,
+    },
+  })
+  orderItem: Partial<OrderItem>,
     @param.query.object('where', getWhereSchemaFor(OrderItem)) where?: Where<OrderItem>,
   ): Promise<Count> {
-    return this.orderRepository.items(id).patch(orderItem, where);
+    return this.orderRepository.items(orderId).patch(orderItem, where);
   }
 
-  @del('/orders/{id}/order-items', {
+  @del('/orders/{orderId}/order-items', {
     responses: {
       '200': {
         description: 'Order.OrderItem DELETE success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: { 'application/json': { schema: CountSchema } },
       },
     },
   })
   async delete(
-    @param.path.string('id') id: string,
+    @param.path.string('orderId') orderId: string,
     @param.query.object('where', getWhereSchemaFor(OrderItem)) where?: Where<OrderItem>,
   ): Promise<Count> {
-    return this.orderRepository.items(id).delete(where);
+    return this.orderRepository.items(orderId).delete(where);
   }
 }
