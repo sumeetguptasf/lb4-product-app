@@ -1,6 +1,7 @@
 postgres://postgres:postgres@localhost:5432/product
 postgres://postgres:postgres@localhost:5432/userdb
 postgres://postgres:postgres@localhost:5432/orderdb
+postgres://postgres:postgres@localhost:5432/chatdb
 
 docker exec -it postgres-container psql -U postgres -d productdb
 docker exec -it postgres-container psql -U postgres -d userdb
@@ -67,6 +68,17 @@ User:
   "address": "HP, GG Kanpur 208001",
   "role": "SuperAdmin",
   "created_at": "2025-07-24T20:24:11.269Z"
+}
+{
+  "id": "4c3eaeb2-d99c-4c3a-a9b2-001f09f9dc6f",
+  "firstName": "Raman",
+  "middleName": "",
+  "lastName": "Shanker",
+  "email": "raman.shanker@email.com",
+  "phone": "9876789032",
+  "address": "rm villa, gehu road, vilas colony, akbarpur",
+  "role": "SuperAdmin",
+  "created_at": "2025-08-11T05:50:35.999Z"
 }
 Order:
 {
@@ -150,3 +162,9 @@ Doubt :
 Findings : 
 1. The id is not generated automatically if generated = true; and then we use any defaultFn = 'uuidv4' or anything.
     Other way to do it is using the postgres extension : 'uuid-ossp' and generate_uuid_v4() for default value of id. -> more database oriented setup is required , generally I never like doing it that way.
+
+
+REDIS 
+
+
+redis-cli -h localhost -p 6379

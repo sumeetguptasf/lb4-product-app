@@ -18,6 +18,15 @@ const config = {
         getOrdersByProductId: ['productId'],
       },
     },
+    {
+      template: {
+        method: 'GET',
+        url: '{baseUrl}/orders?filter[where][userId]={userId}',
+      },
+      functions: {
+        getOrdersByUserId: ['userId'],
+      },
+    },
   ],
 }
 

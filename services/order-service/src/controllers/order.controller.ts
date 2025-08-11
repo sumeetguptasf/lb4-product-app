@@ -16,7 +16,6 @@ import {
   del,
   requestBody,
   response,
-  api,
 } from '@loopback/rest';
 import { Order } from '../models';
 import { OrderRepository } from '../repositories';

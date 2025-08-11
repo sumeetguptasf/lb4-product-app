@@ -19,12 +19,6 @@ services:
     container_name: user-service-container
     env_file:
       - ./services/user-service/.env.docker
-    # environment:
-    #   - USER_SERVICE_NAME=User Service
-    #   - PORT=3002
-    #   - HOST=localhost
-    #   - DB_URL=postgres://postgres:postgres@postgres:5432/userdb
-    #   - DB_SSL=false
     ports:
       - "3002:3002"
     depends_on:
@@ -37,12 +31,6 @@ services:
     container_name: order-service-container
     env_file:
       - ./services/order-service/.env.docker
-    # environment:
-    #   - SERVICE_NAME=Order Service
-    #   - PORT=3003
-    #   - HOST=localhost
-    #   - DB_URL=postgres://postgres:postgres@postgres:5432/orderdb
-    #   - DB_SSL=false
     ports:
       - "3003:3003"
     depends_on:
@@ -55,12 +43,6 @@ services:
     container_name: product-service-container
     env_file:
       - ./services/product-service/.env.docker
-    # environment:
-    #   - PRODUCT_SERVICE_NAME=Product Service
-    #   - PORT=3001
-    #   - HOST=localhost
-    #   - DB_URL=postgres://postgres:postgres@postgres:5432/productdb
-    #   - DB_SSL=false
     ports:
       - "3001:3001"
     depends_on:
@@ -71,13 +53,15 @@ services:
       context: ./services/store-facade
       dockerfile: Dockerfile
     container_name: api-gateway-container
-    environment:
-      - API_GATEWAY_NAME=store-facade
-      - USER_SERVICE_URL=http://user-service:3002
-      - ORDER_SERVICE_URL=http://order-service:3003
-      - PRODUCT_SERVICE_URL=http://product-service:3001
-      - PORT=3000
-      - HOST=localhost
+    env_file:
+      - ./services/store-facade/.env.docker
+    # environment:
+    #   - API_GATEWAY_NAME=store-facade
+    #   - USER_SERVICE_URL=http://user-service:3002
+    #   - ORDER_SERVICE_URL=http://order-service:3003
+    #   - PRODUCT_SERVICE_URL=http://product-service:3001
+    #   - PORT=3000
+    #   - HOST=localhost
     ports:
       - "3000:3000"
     depends_on:

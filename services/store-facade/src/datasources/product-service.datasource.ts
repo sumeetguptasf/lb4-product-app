@@ -1,7 +1,5 @@
 import { inject, lifeCycleObserver, LifeCycleObserver } from "@loopback/core";
 import { juggler } from "@loopback/repository";
-import * as dotenv from 'dotenv';
-dotenv.config(); // Load .env before anything else
 
   const config = {
   name: 'productService',
