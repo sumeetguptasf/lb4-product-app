@@ -39,3 +39,25 @@ Day 8:
 - In store-facade, define REST datasources for the new ARC microservices. 
 - Create a façade endpoint that triggers a chat or notification upon events like new user sign-up or new order. 
 - Test a full flow: user logs in via ARC auth, triggers a protected action, if they spam calls ARC rate-limiting blocks them, if order completes ARC sends a notification.
+
+
+
+
+Problems faced : 
+1. dependency Issue - loopback4 authentication services and authorization services are incompatible with loopback/boot@8.0.3 .  
+Could not resolve dependency:
+-> peer @loopback/boot@"^7.0.9" from loopback4-authentication@12.2.0
+-> peer @loopback/core@"^6.0.0" from @loopback/boot@7.0.14
+-> peer @loopback/core@"^6.0.0" from @loopback/boot@7.0.14
+-> peer @loopback/core@"^7.0.0" from @loopback/rest@15.0.3
+-> peer @loopback/rest@"^15.0.1" from @loopback/rest-explorer@8.0.3
+-> peer @loopback/core@"^7.0.0" from @loopback/rest-explorer@8.0.3
+-> peer @loopback/boot@"^7.0.9" from loopback4-authentication@12.2.0
+-> peer @loopback/core@"^6.0.0" from @loopback/boot@7.0.14
+
+
+
+
+
+
+2. better to use express rate-limiter - more flexible.
