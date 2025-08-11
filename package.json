@@ -5,14 +5,12 @@
   "private": true,
   "author": "Sumeet Gupta <sumeet.gupta@sourcefuse.com>",
   "workspaces": [
-    "product-service",
-    "user-service",
-    "store-facade",
-    "order-service"
+    "services/*",
+    "packages/*"
   ],
   "main": "index.js",
   "scripts": {
-    "start:all": "concurrently \"npm:start --workspace product-service\" \"npm:start --workspace user-service\" \"npm:start --workspace store-facade\"",
+    "start:all": "concurrently \"npm:start --workspace services/product-service\" \"npm:start --workspace services/user-service\" \"npm:start --workspace services/store-facade\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -36,5 +34,8 @@
   "homepage": "https://github.com/sumeetguptasf/lb4-product-app#readme",
   "devDependencies": {
     "concurrently": "^9.2.0"
+  },
+  "dependencies": {
+    "loopback-connector-rest": "^5.0.8"
   }
 }
