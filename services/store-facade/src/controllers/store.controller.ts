@@ -9,19 +9,9 @@ import { OrderService } from '../services/order-service.interface';
 import { UserService } from '../services/user-service.interface';
 import { Order } from '../models/order.model';
 import { Product } from '../models';
-import { ratelimit } from 'loopback4-ratelimiter';
+import {ratelimit} from 'loopback4-ratelimiter';
 import { User } from '../models/user.model';
-
-
-const rateLimitKeyGen = (req: Request) => {
-  const productId = req.params?.productId;
-
-  // Fallback: if productId not found, rate limit by IP
-  const ip = req.ip || req.connection.remoteAddress;
-
-  // Create a unique key
-  return `product-${productId || 'unknown'}:${ip}`;
-};
+import { rateLimitKeyGen } from '../utils/rate-limit-keygen.util';
 
 @injectable()
 export class StoreFacadeController implements LifeCycleObserver {
@@ -76,6 +66,7 @@ export class StoreFacadeController implements LifeCycleObserver {
     return { product, orders };
   }
 
+  @ratelimit(true)
   @get('facades/users/{userId}/orders')
   async getOrdersForUser(
     @param.path.string('userId') userId: string,
