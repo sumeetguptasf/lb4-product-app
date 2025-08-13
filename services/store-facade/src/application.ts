@@ -29,11 +29,7 @@ export class StoreFacadeApplication extends BootMixin(
     const redisClient = new Redis({
       host: '127.0.0.1',
       port: 6379,
-      password: 'redispassword', // only if set in Redis
-      enableOfflineQueue: false,
-    });
-    redisClient.ping((err, res) => {
-      console.log('[Redis Ping]', err || res);
+      password: 'redispassword',
     });
     // this.middleware(inMemoryRateLimiter);
     this.middleware(redisRateLimiter);
@@ -53,7 +49,7 @@ export class StoreFacadeApplication extends BootMixin(
     this.bind(RateLimitSecurityBindings.CONFIG).to({
       name: 'inMemory',
       type: 'InMemoryStore',
-      points: 2,
+      points: 10,
       duration: 60,
       skipFailedRequests: false,
       keyGenerator: rateLimitKeyGen,

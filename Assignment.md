@@ -29,9 +29,9 @@ Day 6:
 - Restrict certain routes (e.g., product creation) to Admin or SuperAdmin using ARC’s decorators or metadata-based checks.
 - Test that calls without valid tokens or roles are blocked, confirming ARC’s built-in logic is engaged.
 Day 7:
-- Install ARC’s rate-limiter module in store-facade, configure it to use Redis or in-memory if needed.
-- Replace or enhance the LB4 sequence in store-facade with ARC secure sequences, ensuring rate-limit checks are automatically applied.
-- Verify repeated or high-traffic calls from the same user or IP get a 429 error, demonstrating ARC’s rate-limiting is active. No custom interceptor code—just ARC config.
+- Install ARC’s rate-limiter module in store-facade, configure it to use Redis or in-memory if needed.✅
+- Replace or enhance the LB4 sequence in store-facade with ARC secure sequences, ensuring rate-limit checks are automatically applied.✅
+- Verify repeated or high-traffic calls from the same user or IP get a 429 error, demonstrating ARC’s rate-limiting is active. No custom interceptor code—just ARC config.✅
 
 Day 8:
 - Generate an ARC-based chat-service or notification-service with Arc CLI. 
